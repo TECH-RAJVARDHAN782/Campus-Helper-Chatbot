@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Helper Bot</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="chat-container">
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="bot-avatar">🤖</div>
+            <div class="bot-info">
+                <h3>Campus Helper Bot</h3>
+                <span class="status online">Online</span>
+            </div>
+            <div class="header-actions">
+                <button class="btn-icon" onclick="clearChat()">🗑️</button>
+                <button class="btn-icon" onclick="toggleSettings()">⚙️</button>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions" id="quickActions">
+            <div class="quick-action" onclick="sendQuickMessage('Where is the library?')">
+                <span class="icon">📚</span>
+                <span>Library</span>
+            </div>
+            <div class="quick-action" onclick="sendQuickMessage('Dining menu')">
+                <span class="icon">🍽️</span>
+                <span>Dining</span>
+            </div>
+            <div class="quick-action" onclick="sendQuickMessage('My classes today')">
+                <span class="icon">📅</span>
+                <span>Schedule</span>
+            </div>
+            <div class="quick-action" onclick="sendQuickMessage('Upcoming events')">
+                <span class="icon">🎉</span>
+                <span>Events</span>
+            </div>
+            <div class="quick-action" onclick="sendQuickMessage('Emergency contacts')">
+                <span class="icon">🚨</span>
+                <span>Emergency</span>
+            </div>
+        </div>
+
+        <!-- Chat Messages -->
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot-message">
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    <div class="message-text">
+                        Hello! I'm your Campus Helper Bot. I can help you with:
+                        <br><br>
+                        📍 Campus navigation<br>
+                        📅 Class schedules<br>
+                        🍽️ Dining information<br>
+                        🎉 Campus events<br>
+                        🚨 Emergency contacts<br>
+                        <br>
+                        What would you like to know?
+                    </div>
+                    <div class="message-time">Just now</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Typing Indicator -->
+        <div class="typing-indicator" id="typingIndicator" style="display: none;">
+            <div class="message-avatar">🤖</div>
+            <div class="typing-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="chat-input">
+            <div class="input-container">
+                <input 
+                    type="text" 
+                    id="messageInput" 
+                    placeholder="Type your message..." 
+                    onkeypress="handleKeyPress(event)"
+                >
+                <button class="btn-send" onclick="sendMessage()">
+                    <span class="send-icon">➤</span>
+                </button>
+            </div>
+            <div class="input-suggestions" id="suggestions" style="display: none;">
+                <div class="suggestion" onclick="sendQuickMessage('Where is the gym?')">Where is the gym?</div>
+                <div class="suggestion" onclick="sendQuickMessage('Library hours')">Library hours</div>
+                <div class="suggestion" onclick="sendQuickMessage('Campus map')">Campus map</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settingsModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Settings</h3>
+                <button class="btn-close" onclick="toggleSettings()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-item">
+                    <label>Notifications</label>
+                    <input type="checkbox" id="notifications" checked>
+                </div>
+                <div class="setting-item">
+                    <label>Dark Mode</label>
+                    <input type="checkbox" id="darkMode" onchange="toggleDarkMode()">
+                </div>
+                <div class="setting-item">
+                    <label>Voice Input</label>
+                    <input type="checkbox" id="voiceInput">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
