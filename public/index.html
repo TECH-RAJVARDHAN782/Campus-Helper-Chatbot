@@ -77,26 +77,22 @@
             </div>
         </div>
 
-        <!-- Input Area -->
-        <div class="chat-input">
-            <div class="input-container">
-                <input 
-                    type="text" 
-                    id="messageInput" 
-                    placeholder="Type your message..." 
-                    onkeypress="handleKeyPress(event)"
-                >
-                <button class="btn-send" onclick="sendMessage()">
-                    <span class="send-icon">➤</span>
-                </button>
-            </div>
-            <div class="input-suggestions" id="suggestions" style="display: none;">
-                <div class="suggestion" onclick="sendQuickMessage('Where is the gym?')">Where is the gym?</div>
-                <div class="suggestion" onclick="sendQuickMessage('Library hours')">Library hours</div>
-                <div class="suggestion" onclick="sendQuickMessage('Campus map')">Campus map</div>
-            </div>
-        </div>
-    </div>
+        <div class="input-container">
+    <!-- Mic button (for voice input) -->
+    <button class="btn-mic" id="voiceBtn" title="Voice input" onclick="toggleMic()">🎤</button>
+
+    <input 
+        type="text" 
+        id="messageInput" 
+        placeholder="Type your message..." 
+        onkeypress="handleKeyPress(event)"
+    >
+
+    <button class="btn-send" onclick="sendMessage()">
+        <span class="send-icon">➤</span>
+    </button>
+</div>
+
 
     <!-- Settings Modal -->
     <div class="modal" id="settingsModal" style="display: none;">
@@ -118,6 +114,10 @@
                     <label>Voice Input</label>
                     <input type="checkbox" id="voiceInput">
                 </div>
+                <div class="setting-item">
+                    <label>Voice Output (Bot speaks)</label>
+                    <input type="checkbox" id="voiceOutput">
+                </div>
             </div>
         </div>
     </div>
@@ -125,3 +125,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
