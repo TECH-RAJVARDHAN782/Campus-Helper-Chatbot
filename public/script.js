@@ -167,3 +167,91 @@ function loadSettings() {
 
 // Initialize settings on load
 document.addEventListener('DOMContentLoaded', loadSettings);
+
+// ---------------------------
+// Auto-changing background color
+// ---------------------------
+function startBackgroundAnimation() {
+    setInterval(() => {
+        const r = Math.floor(Math.random() * 255);
+        const g = Math.floor(Math.random() * 255);
+        const b = Math.floor(Math.random() * 255);
+        document.body.style.background = `rgb(${r}, ${g}, ${b})`;
+    }, 1000); // change every second
+}
+
+document.addEventListener('DOMContentLoaded', startBackgroundAnimation);
+
+// ---------------------------
+// Voice input (SpeechRecognition)
+// ---------------------------
+let recognition;
+let isListening = false;
+
+function initRecognition() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) return null;
+
+    const rec = new SpeechRecognition();
+    rec.continuous = false;
+    rec.interimResults = false;
+    rec.lang = 'en-US';
+
+    rec.onstart = () => {
+        isListening = true;
+        document.getElementById('voiceBtn').classList.add('listening');
+    };
+
+    rec.onend = () => {
+        isListening = false;
+        document.getElementById('voiceBtn').classList.remove('listening');
+    };
+
+    rec.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        document.getElementById('messageInput').value = transcript;
+        sendMessage();
+    };
+
+    return rec;
+}
+
+function toggleMic() {
+    if (!document.getElementById('voiceInput').checked) {
+        alert('Enable "Voice Input" in Settings first.');
+        return;
+    }
+    if (!recognition) recognition = initRecognition();
+    if (!recognition) {
+        alert("Speech recognition not supported in this browser.");
+        return;
+    }
+    if (isListening) {
+        recognition.stop();
+    } else {
+        recognition.start();
+    }
+}
+
+// ---------------------------
+// Voice output (Text-to-Speech)
+// ---------------------------
+function speakText(text) {
+    if (!document.getElementById('voiceOutput').checked) return;
+    if (!('speechSynthesis' in window)) return;
+
+    const cleaned = text.replace(/\*\*/g, '').replace(/<\/?[^>]+(>|$)/g, '');
+    const utter = new SpeechSynthesisUtterance(cleaned);
+    utter.lang = 'en-US';
+    window.speechSynthesis.cancel(); // stop previous speech
+    window.speechSynthesis.speak(utter);
+}
+
+// Modify addMessage() so bot messages speak
+const originalAddMessage = addMessage;
+addMessage = function(text, sender) {
+    originalAddMessage(text, sender);
+    if (sender === 'bot') {
+        speakText(text);
+    }
+};
