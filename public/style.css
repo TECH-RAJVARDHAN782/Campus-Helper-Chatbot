@@ -11,6 +11,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: background 1s ease;
 }
 
 .chat-container {
@@ -455,3 +456,37 @@ body.dark-mode {
 .chat-messages::-webkit-scrollbar-thumb:hover {
     background: #94a3b8;
 }
+
+/* Mic button */
+.btn-mic {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: none;
+    background: white;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-mic:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.btn-mic.listening {
+    background: linear-gradient(135deg, #ff7a7a 0%, #ff4d4d 100%);
+    color: white;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+    100% { transform: scale(1); }
+}
+
